@@ -7,16 +7,19 @@ def _as_text(bytestring):
 
 
 def do(cmd, env=None, su=False):
+    shell = False
     if isinstance(cmd, str):
         cmd = cmd.split(' ')
 
     if su:
         cmd = ['sudo'] + cmd
+        cmd = ' '.join(cmd)
+        shell = True
 
     try:
-        p = subprocess.Popen(cmd, env=env, stdout=subprocess.PIPE,
+        p = subprocess.Popen(cmd, env=env, shell=shell, stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
-    except FileNotFoundError as e:
+    except FileNotFoundError:
         raise OSError(2, 'cmd not found, do you have %s installed?' % cmd[0])
     out, err = p.communicate()
     if p.returncode:
