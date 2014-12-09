@@ -1,8 +1,10 @@
 from setuptools import setup
 
 install_requires = [
-#    'lxc',
+    # 'lxc',
     'jujuclient',
+    'click',
+    'clint',
 ]
 
 tests_require = [
