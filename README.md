@@ -10,13 +10,13 @@ Real magic for the local provider
 
 Not all features have been created. This is both a README and Roadmap
 
-## `juju local images [--update]`
+## juju local images `[--update]`
 
 Show current cached cloud image
 
 * `--update` - update the cloud images currently cached
 
-## `juju local templates [--upgrade] [--rebuild] <series>`
+## juju local templates `[--upgrade]` `[--rebuild]` `<series>`
 
 Show current LXC templates
 
@@ -25,33 +25,33 @@ Show current LXC templates
 
 ## juju local remove
 
-## `juju local debug`
+## juju local debug
 
 Local provider not working? Run this to validate and troubleshoot common issues
 
-## `juju local btrfs [--enable] [--disable]`
+## juju local btrfs `[--enable]` `[--disable]`
 
 Shows the current status of BTRFS backed LXC images
 
 * `--enable` - Enable BTRFS backed LXC images
 * `--disable` - Disable BTRFS backed LXC
 
-## `juju local mount-charm <service> <mount-point>`
+## juju local mount-charm `<service>` `<mount-point>`
 
 Mount the charm-dir for a service locally to allow easier access
 
 * `service` - Deployed service to mount
 * `mount-point` - Where to mount the service's CHARM_DIR
 
-## `juju local encrypted-home`
+## juju local encrypted-home
 
 Enable work-arounds for users with encrypted-home drives
 
-## `juju local suspend`
+## juju local suspend
 
 Suspend a local deployment
 
-## `juju local resume`
+## juju local resume
 
 Resume a previously suspended deployment
 
