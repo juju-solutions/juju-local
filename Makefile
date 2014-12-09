@@ -6,6 +6,12 @@ else
   PIP = venv/bin/pip
 endif
 # If the bin version does not exist look in venv/local/bin
+ifeq ($(wildcard venv/bin/flake8),)
+  FLAKE = venv/local/bin/flake8
+else
+  FLAKE = venv/bin/flake8
+endif
+# If the bin version does not exist look in venv/local/bin
 ifeq ($(wildcard venv/bin/nosetests),)
   NOSE = venv/local/bin/nosetests
 else
@@ -81,7 +87,7 @@ coverage: $(NOSE)
 
 .PHONY: lint
 lint:
-	@find $(sources) -type f \( -iname '*.py' ! -iname '__init__.py' ! -iwholename '*venv/*' \) -print0 | xargs -r0 flake8
+	@find $(sources) -type f \( -iname '*.py' ! -iname '__init__.py' ! -iwholename '*venv/*' \) -print0 | xargs -r0 $(FLAKE)
 
 .PHONY: check
 check: test lint
