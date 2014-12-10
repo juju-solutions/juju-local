@@ -3,15 +3,28 @@ import re
 import click
 import datetime
 
+from clint.textui import (
+    puts,
+    colored,
+)
+
 from .helpers import sudo
 
 
 @click.command('images')
 @click.option('--update', default=False,
               help='update the cloud images currently cached')
-def images_cli(update=False):
+def images_cli(update=False):  # pragma: no cover
     cur_images = cloud_images()
-    click.echo(cur_images)
+    for img in cur_images:
+        age = datetime.datetime.now() - img['modified']
+        cmd = colored.green
+        if age.days > 30:
+            cmd = colored.yellow
+        if age.days > 90:
+            cmd = colored.red
+        puts(cmd("%s-%s-%s: %s days old" % (img['distro'], img['series'],
+                                            img['arch'], age.days)))
 
 
 def cloud_images():
