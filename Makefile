@@ -46,8 +46,8 @@ clean:
 	find . -name __pycache__ -delete
 	rm -f .coverage
 
-develop: lib/python*/site-packages/jujulocal.egg-link
-lib/python*/site-packages/jujulocal.egg-link:
+develop: lib/python*/site-packages/juju_local.egg-link
+lib/python*/site-packages/juju_local.egg-link:
 	$(PY) setup.py develop
 
 .PHONY: sysdeps

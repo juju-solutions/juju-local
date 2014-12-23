@@ -15,7 +15,7 @@ tests_require = [
 
 
 setup(
-    name='jujulocal',
+    name='juju-local',
     version='0.0.1',
     description='Juju local plugin, powertools for local provider users',
     install_requires=install_requires,
