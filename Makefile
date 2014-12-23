@@ -48,6 +48,7 @@ clean:
 
 develop: lib/python*/site-packages/juju_local.egg-link
 lib/python*/site-packages/juju_local.egg-link:
+	$(PIP) install --find-links=reqs jujuclient
 	$(PY) setup.py develop
 
 .PHONY: sysdeps
