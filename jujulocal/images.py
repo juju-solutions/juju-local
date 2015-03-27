@@ -2,6 +2,7 @@ import os
 import re
 import click
 import datetime
+import logging
 
 from clint.textui import (
     puts,
@@ -9,6 +10,8 @@ from clint.textui import (
 )
 
 from .helpers import sudo
+
+log = logging.getLogger(__name__)
 
 
 @click.command('images')
