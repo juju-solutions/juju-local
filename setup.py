@@ -5,6 +5,7 @@ install_requires = [
     'jujuclient',
     'click',
     'clint',
+    'python-dateutil',
 ]
 
 tests_require = [

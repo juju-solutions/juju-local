@@ -3,6 +3,7 @@ import logging
 
 from .images import images_cli
 from .suspend import suspend_cli, resume_cli
+from .templates import templates_cli
 
 logging.basicConfig()
 log = logging.getLogger('jujulocal')
@@ -21,3 +22,4 @@ def main(quiet, verbose):
 main.add_command(images_cli)
 main.add_command(suspend_cli)
 main.add_command(resume_cli)
+main.add_command(templates_cli)
