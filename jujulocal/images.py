@@ -15,19 +15,27 @@ log = logging.getLogger(__name__)
 
 
 @click.command('images')
-@click.option('--update', default=False,
+@click.option('--update', is_flag=True,
               help='update the cloud images currently cached')
-def images_cli(update=False):  # pragma: no cover
+@click.option('--clean', is_flag=True,
+              help='remove all cached cloud images')
+def images_cli(clean=False, update=False):  # pragma: no cover
     cur_images = cloud_images()
+    if not cur_images:
+        return puts('There are no LXC images cached')
+
+    if clean:
+        return clean_cloud_images(cur_images)
+
     for img in cur_images:
         age = datetime.datetime.now() - img['modified']
-        cmd = colored.green
+        color = colored.green
         if age.days > 30:
-            cmd = colored.yellow
+            color = colored.yellow
         if age.days > 90:
-            cmd = colored.red
-        puts(cmd("%s-%s-%s: %s days old" % (img['distro'], img['series'],
-                                            img['arch'], age.days)))
+            color = colored.red
+        puts(color("%s-%s-%s: %s days old" % (img['distro'], img['series'],
+                                              img['arch'], age.days)))
 
 
 def cloud_images():
@@ -36,9 +44,17 @@ def cloud_images():
     # maybe we should just let the user type "sudo juju local images"...
     scan = []
     files = []
-    for d in sudo('ls /var/cache/lxc/').split('\n'):
+    images = sudo('ls /var/cache/lxc/')
+    if not images:
+        return None
+
+    for d in images.split('\n'):
         if 'cloud-' in d:
-            for f in sudo('ls /var/cache/lxc/%s/' % d).split('\n'):
+            targz = sudo('ls /var/cache/lxc/%s/' % d)
+            if not targz:
+                return None
+
+            for f in targz.split('\n'):
                 if f.endswith('.tar.gz'):
                     scan.append('/var/cache/lxc/%s/%s' % (d, f))
     for f in (sudo('stat -c "%Y %s %n" {}'.format(
@@ -56,6 +72,16 @@ def cloud_images():
                       'distro': archseries[0],
                       })
     return files
+
+
+def get_cloudimg(series):
+    pass
+
+
+def clean_cloud_images(images):
+    for f in images:
+        log.debug('Deleting %s' % f['path'])
+        sudo('rm -f %s' % f['path'])
 
 
 def parse_cloudimg(s):
