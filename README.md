@@ -4,7 +4,7 @@ Real magic for the local provider
 
 # Installation
 
-`sudo pip install -U jujulocal`
+`sudo pip install -U juju-local`
 
 # Usage
 
